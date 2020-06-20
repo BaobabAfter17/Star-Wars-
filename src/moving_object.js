@@ -23,9 +23,10 @@ MovingObject.prototype.draw = function(ctx) {
     ctx.fill();
 }
 
-MovingObject.prototype.move = function () {
-    this.pos[0] += this.vel[0];
-    this.pos[1] += this.vel[1];
+MovingObject.prototype.move = function (timeDelta) {
+    timeDelta = timeDelta || 1;
+    this.pos[0] += this.vel[0] * timeDelta;
+    this.pos[1] += this.vel[1] * timeDelta;
     if (this.isWrappable) {
         this.pos = this.game.wrap(this.pos);
     } else {

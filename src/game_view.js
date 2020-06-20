@@ -4,31 +4,23 @@ function GameView(ctx) {
     this.game = new Game();
     this.ctx = ctx;
     this.tooSoon = false;
-    this.img = this.background();
-}
 
-GameView.prototype.background = function () {
     const img = new Image();
     img.onload = function () {
         ctx.drawImage(img, 0, 0);
     };
     img.src = "./myImage.png";
-    return img;
+    this.img = img;
+
+    this.lastTime = 0;
 }
 
 GameView.prototype.start = function () {
-    setInterval(
-        () => {
-            this.bindKeyHandlers();
-            this.game.step();
-            this.game.draw(this.ctx, this.img);
-        },
-        20
-    );
+    requestAnimationFrame( () => { this.animate() });
 }
 
 GameView.prototype.bindKeyHandlers = function () {
-    let detalVel = 2;
+    let detalVel = 3;
     if (key.isPressed("up")) {
         this.game.ship.power([0, -detalVel]);
     }
@@ -49,6 +41,16 @@ GameView.prototype.bindKeyHandlers = function () {
         }
     }
 
+}
+
+GameView.prototype.animate = function (currentTime) {
+    let deltaTime = currentTime - this.lastTime;
+    this.game.moveObjects(deltaTime);
+    this.game.checkCollisions();
+    this.bindKeyHandlers();
+    this.game.draw(this.ctx, this.img);
+    this.lastTime = currentTime;
+    requestAnimationFrame( () => { this.animate() });
 }
 
 module.exports = GameView;

@@ -35,8 +35,8 @@ Game.prototype.draw = function (ctx, img) {
     this.allObjects().forEach(obj => obj.draw(ctx));
 }
 
-Game.prototype.moveObjects = function () {
-    this.allObjects().forEach(obj => obj.move() );
+Game.prototype.moveObjects = function (timeDelta) {
+    this.allObjects().forEach(obj => obj.move(timeDelta) );
 }
 
 Game.prototype.wrap = function (pos) {
