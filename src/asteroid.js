@@ -21,10 +21,12 @@ Asteroid.prototype.collideWith = function (otherObject) {
     if (this.isCollidedWith(otherObject)) {
         if (otherObject instanceof Ship) {
             otherObject.relocate();
+            this.game.deathCount += 1;
         }
         if (otherObject instanceof Bullet){
             this.game.remove(this);
             this.game.remove(otherObject);
+            this.game.score += 10;
         }
     }
 }

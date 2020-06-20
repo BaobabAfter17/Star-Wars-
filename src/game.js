@@ -11,8 +11,8 @@ function Game() {
     this.addAsteroids();
     this.ship = new Ship(this.randomPosition(), this);
     this.bullets = [];
-
-
+    this.score = 0;
+    this.deathCount = 0;
 }
 
 Game.prototype.addAsteroids = function () {
@@ -34,6 +34,8 @@ Game.prototype.draw = function (ctx, img) {
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
     ctx.drawImage(img, 0, 0);
     this.allObjects().forEach(obj => obj.draw(ctx));
+    document.getElementById("score").innerHTML = this.score;
+    document.getElementById("death").innerHTML = this.deathCount;
 }
 
 Game.prototype.moveObjects = function (timeDelta) {
@@ -99,7 +101,4 @@ Game.prototype.isOutOfBounds = function (pos) {
     return pos[0] < 0 || pos[0] > Game.DIM_X || pos[1] < 0 || pos[1] > Game.DIM_Y;
 }
 
-Game.prototype.over = function () {
-    return this.asteroids.length === 0;
-}
 module.exports = Game;
