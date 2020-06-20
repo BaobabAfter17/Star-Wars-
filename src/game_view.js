@@ -13,6 +13,7 @@ function GameView(ctx) {
     this.img = img;
 
     this.lastTime = 0;
+    // this.gameOver = false;
 }
 
 GameView.prototype.start = function () {
@@ -44,13 +45,18 @@ GameView.prototype.bindKeyHandlers = function () {
 }
 
 GameView.prototype.animate = function (currentTime) {
-    let deltaTime = currentTime - this.lastTime;
-    this.game.moveObjects(deltaTime);
-    this.game.checkCollisions();
-    this.bindKeyHandlers();
-    this.game.draw(this.ctx, this.img);
-    this.lastTime = currentTime;
-    requestAnimationFrame( () => { this.animate() });
+    if (!this.gameOver) {
+        let deltaTime = currentTime - this.lastTime;
+        this.game.moveObjects(deltaTime);
+        this.game.checkCollisions();
+        this.bindKeyHandlers();
+        this.game.draw(this.ctx, this.img);
+        this.lastTime = currentTime;
+        // if (this.game.over()) {
+        //     this.gameOver = true;
+        // }
+        requestAnimationFrame(() => { this.animate() });
+    }
 }
 
 module.exports = GameView;

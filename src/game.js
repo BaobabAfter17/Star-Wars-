@@ -1,6 +1,7 @@
 const Asteroid = require("./asteroid");
 const Ship = require("./ship");
 const Bullet = require("./bullet");
+const GameView = require("./game_view");
 
 function Game() {
     Game.DIM_X = 700;
@@ -98,9 +99,7 @@ Game.prototype.isOutOfBounds = function (pos) {
     return pos[0] < 0 || pos[0] > Game.DIM_X || pos[1] < 0 || pos[1] > Game.DIM_Y;
 }
 
-// const g = new Game();
-// console.log(g.asteroids);
-// g.remove(g.asteroids[0]);
-// console.log(g.asteroids);
-
+Game.prototype.over = function () {
+    return this.asteroids.length === 0;
+}
 module.exports = Game;
