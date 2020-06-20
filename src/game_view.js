@@ -1,10 +1,19 @@
 const Game = require("./game");
-const Util = require("./util");
 
 function GameView(ctx) {
     this.game = new Game();
     this.ctx = ctx;
     this.tooSoon = false;
+    this.img = this.background();
+}
+
+GameView.prototype.background = function () {
+    const img = new Image();
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0);
+    };
+    img.src = "./myImage.png";
+    return img;
 }
 
 GameView.prototype.start = function () {
@@ -12,7 +21,7 @@ GameView.prototype.start = function () {
         () => {
             this.bindKeyHandlers();
             this.game.step();
-            this.game.draw(this.ctx);
+            this.game.draw(this.ctx, this.img);
         },
         20
     );

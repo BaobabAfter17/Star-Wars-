@@ -10,6 +10,8 @@ function Game() {
     this.addAsteroids();
     this.ship = new Ship(this.randomPosition(), this);
     this.bullets = [];
+
+
 }
 
 Game.prototype.addAsteroids = function () {
@@ -27,9 +29,10 @@ Game.prototype.randomPosition = function () {
     return [x, y];
 }
 
-Game.prototype.draw = function (ctx) {
+Game.prototype.draw = function (ctx, img) {
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-    this.allObjects().forEach( obj => obj.draw(ctx) );
+    ctx.drawImage(img, 0, 0);
+    this.allObjects().forEach(obj => obj.draw(ctx));
 }
 
 Game.prototype.moveObjects = function () {
